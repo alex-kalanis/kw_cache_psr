@@ -1,0 +1,36 @@
+{
+    "name": "alex-kalanis/kw_cache_psr",
+    "description": "KWCMS Cache adapter for PSR-16",
+    "keywords": [
+        "cache"
+    ],
+    "license": "BSD-3-Clause",
+    "type": "library",
+    "require": {
+        "alex-kalanis/kw_cache": ">=2.0 <3",
+        "psr/simple-cache": ">=1.0 <2",
+        "ext-json": "*",
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "alex-kalanis/kw_files": ">=3.3 <4",
+        "alex-kalanis/kw_storage": ">=4.0 <5",
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "phpstan/phpstan": "^1.0",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "phpunit/phpunit": ">=7.2 <=9"
+    },
+    "suggest": {
+        "alex-kalanis/kw_files": "Files access in KWCMS",
+        "alex-kalanis/kw_storage": "Asorted storage in KWCMS"
+    },
+    "autoload": {
+        "psr-4": {
+            "kalanis\\kw_cache_psr\\": "php-src/"
+        }
+    },
+    "scripts": {
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
