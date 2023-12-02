@@ -28,7 +28,12 @@ class SoloCacheAdapter implements CacheInterface
         $this->format = $format;
     }
 
-    public function get(string $key, $default = null)
+    /**
+     * @param string $key
+     * @param mixed $default
+     * @return mixed|null
+     */
+    public function get($key, $default = null)
     {
         try {
             if ($this->cache->exists()) {
@@ -40,7 +45,13 @@ class SoloCacheAdapter implements CacheInterface
         }
     }
 
-    public function set(string $key, $value, $ttl = null): bool
+    /**
+     * @param string $key
+     * @param mixed $value
+     * @param \DateInterval|int|null $ttl
+     * @return bool
+     */
+    public function set($key, $value, $ttl = null): bool
     {
         try {
             return $this->cache->set(strval($this->format->pack($value)));
@@ -49,7 +60,11 @@ class SoloCacheAdapter implements CacheInterface
         }
     }
 
-    public function delete(string $key): bool
+    /**
+     * @param string $key
+     * @return bool
+     */
+    public function delete($key): bool
     {
         return $this->clear();
     }
@@ -64,7 +79,12 @@ class SoloCacheAdapter implements CacheInterface
         }
     }
 
-    public function getMultiple(iterable $keys, $default = null): iterable
+    /**
+     * @param iterable<string|int, string> $keys
+     * @param mixed $default
+     * @return iterable<string, mixed>
+     */
+    public function getMultiple($keys, $default = null): iterable
     {
         $results = [];
         foreach ($keys as $key) {
@@ -78,17 +98,25 @@ class SoloCacheAdapter implements CacheInterface
      * @param null $ttl
      * @return bool
      */
-    public function setMultiple(iterable $values, $ttl = null): bool
+    public function setMultiple($values, $ttl = null): bool
     {
         return false;
     }
 
-    public function deleteMultiple(iterable $keys): bool
+    /**
+     * @param iterable<string|int, string> $keys
+     * @return bool
+     */
+    public function deleteMultiple($keys): bool
     {
         return $this->clear();
     }
 
-    public function has(string $key): bool
+    /**
+     * @param string $key
+     * @return bool
+     */
+    public function has($key): bool
     {
         try {
             return $this->cache->exists();

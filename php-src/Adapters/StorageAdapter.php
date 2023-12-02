@@ -5,12 +5,12 @@ namespace kalanis\kw_cache_psr\Adapters;
 
 use kalanis\kw_cache\CacheException;
 use kalanis\kw_cache\Interfaces\IFormat;
+use kalanis\kw_cache_psr\InvalidArgumentException;
 use kalanis\kw_cache_psr\Traits\TCheckKey;
 use kalanis\kw_cache_psr\Traits\TTtl;
 use kalanis\kw_storage\Interfaces\IStorage;
 use kalanis\kw_storage\StorageException;
 use Psr\SimpleCache\CacheInterface;
-use Psr\SimpleCache\InvalidArgumentException;
 
 
 /**
@@ -34,7 +34,13 @@ class StorageAdapter implements CacheInterface
         $this->format = $format;
     }
 
-    public function get(string $key, $default = null)
+    /**
+     * @param string $key
+     * @param mixed $default
+     * @throws InvalidArgumentException
+     * @return mixed|null
+     */
+    public function get($key, $default = null)
     {
         try {
             if ($this->has($key)) {
@@ -46,7 +52,15 @@ class StorageAdapter implements CacheInterface
         }
     }
 
-    public function set(string $key, $value, $ttl = null): bool
+    /**
+     * @param string $key
+     * @param mixed $value
+     * @param \DateInterval|int|null $ttl
+     * @throws InvalidArgumentException
+     * @throws \kalanis\kw_cache_psr\CacheException
+     * @return bool
+     */
+    public function set($key, $value, $ttl = null): bool
     {
         try {
             return $this->storage->write($this->checkKey($key), strval($this->format->pack($value)), $this->timeToInt($ttl));
@@ -55,7 +69,12 @@ class StorageAdapter implements CacheInterface
         }
     }
 
-    public function delete(string $key): bool
+    /**
+     * @param string $key
+     * @throws InvalidArgumentException
+     * @return bool
+     */
+    public function delete($key): bool
     {
         try {
             return $this->storage->remove($this->checkKey($key));
@@ -81,7 +100,13 @@ class StorageAdapter implements CacheInterface
         }
     }
 
-    public function getMultiple(iterable $keys, $default = null): iterable
+    /**
+     * @param iterable<string|int, string> $keys
+     * @param mixed $default
+     * @throws InvalidArgumentException
+     * @return iterable<string, mixed>
+     */
+    public function getMultiple($keys, $default = null): iterable
     {
         $result = [];
         foreach ($keys as $key) {
@@ -94,9 +119,10 @@ class StorageAdapter implements CacheInterface
      * @param iterable<string, mixed> $values
      * @param null|int|\DateInterval $ttl
      * @throws InvalidArgumentException
+     * @throws \kalanis\kw_cache_psr\CacheException
      * @return bool
      */
-    public function setMultiple(iterable $values, $ttl = null): bool
+    public function setMultiple($values, $ttl = null): bool
     {
         $result = true;
         foreach ($values as $key => $value) {
@@ -105,16 +131,26 @@ class StorageAdapter implements CacheInterface
         return $result;
     }
 
-    public function deleteMultiple(iterable $keys): bool
+    /**
+     * @param iterable<string|int, string> $keys
+     * @throws InvalidArgumentException
+     * @return bool
+     */
+    public function deleteMultiple($keys): bool
     {
         $result = true;
-        foreach ($keys as $item) {
+        foreach ($keys as $key => $item) {
             $result = $result && $this->delete($item);
         }
         return $result;
     }
 
-    public function has(string $key): bool
+    /**
+     * @param string $key
+     * @throws InvalidArgumentException
+     * @return bool
+     */
+    public function has($key): bool
     {
         try {
             return $this->storage->exists($this->checkKey($key));
