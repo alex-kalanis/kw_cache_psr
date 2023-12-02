@@ -34,3 +34,16 @@ familiar with composer)
 3.) Connect the "kalanis\kw_cache_psr\*" into your app. Extends it for setting your case.
 
 4.) Just call it
+
+## Caveats
+
+Beware that this implementation usually ignore Time-To-Live, because there is no good way to store
+necessary info on filesystem or in raw memory. And KWCMS is based on these structures. If you really
+want to rely on that please use Redis or something similar. Redis can be connected via kw_storage
+via *alex-kalanis/redis-wrapper* package with necessary support already there.
+
+Also there is a limitation that the files with normal/binary strings inside cannot store complicated
+structures and primitives together at once. PHP's serialization can help only so far. So if you have
+something so special, please implement your own format encoder/decoder with *kalanis\kw_cache\Interfaces\IFormat*
+interface. Or better: Store just the data from the objects and expect returning them in strings. That
+can be done with one bridge which can re-create necessary objects and types and normal (de)serialization.
