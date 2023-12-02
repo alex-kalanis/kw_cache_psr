@@ -7,7 +7,7 @@
     "license": "BSD-3-Clause",
     "type": "library",
     "require": {
-        "alex-kalanis/kw_cache": ">=2.0 <3",
+        "alex-kalanis/kw_cache": ">=3.0 <4",
         "psr/simple-cache": ">=1.0 <2",
         "ext-json": "*",
         "php": ">=7.4"

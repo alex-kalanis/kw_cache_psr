@@ -65,7 +65,7 @@ class MultiCacheAdapter implements CacheInterface
             $usedKey = $this->checkKey($key);
             if (!isset($this->caches[$usedKey])) {
                 $cache = clone $this->baseCache;
-                $cache->init($usedKey);
+                $cache->init([$usedKey]);
             } else {
                 $cache = $this->caches[$usedKey];
             }
