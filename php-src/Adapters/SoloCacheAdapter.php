@@ -3,6 +3,7 @@
 namespace kalanis\kw_cache_psr\Adapters;
 
 
+use DateInterval;
 use kalanis\kw_cache\CacheException;
 use kalanis\kw_cache\Interfaces\ICache;
 use kalanis\kw_cache\Interfaces\IFormat;
@@ -48,7 +49,7 @@ class SoloCacheAdapter implements CacheInterface
     /**
      * @param string $key
      * @param mixed $value
-     * @param \DateInterval|int|null $ttl
+     * @param DateInterval|int|null $ttl
      * @return bool
      */
     public function set($key, $value, $ttl = null): bool
@@ -95,7 +96,7 @@ class SoloCacheAdapter implements CacheInterface
 
     /**
      * @param iterable<string, mixed> $values
-     * @param null $ttl
+     * @param null|int|DateInterval $ttl
      * @return bool
      */
     public function setMultiple($values, $ttl = null): bool

@@ -3,6 +3,7 @@
 namespace kalanis\kw_cache_psr\Adapters;
 
 
+use DateInterval;
 use kalanis\kw_cache\CacheException;
 use kalanis\kw_cache\Interfaces\IFormat;
 use kalanis\kw_cache_psr\InvalidArgumentException;
@@ -34,7 +35,6 @@ class FilesAdapter implements CacheInterface
     protected $initialPath = null;
 
     /**
-     * FilesAdapter constructor.
      * @param CompositeAdapter $files
      * @param IFormat $format
      * @param string[] $initialPath
@@ -68,7 +68,7 @@ class FilesAdapter implements CacheInterface
     /**
      * @param string $key
      * @param mixed $value
-     * @param \DateInterval|int|null $ttl
+     * @param DateInterval|int|null $ttl
      * @throws InvalidArgumentException
      * @return bool
      */
@@ -126,7 +126,7 @@ class FilesAdapter implements CacheInterface
 
     /**
      * @param iterable<string, mixed> $values
-     * @param null|int|\DateInterval $ttl
+     * @param null|int|DateInterval $ttl
      * @throws InvalidArgumentException
      * @return bool
      */
@@ -169,13 +169,13 @@ class FilesAdapter implements CacheInterface
     }
 
     /**
-     * @param string $initalKey
+     * @param string $initialKey
      * @throws PathsException
      * @throws InvalidArgumentException
      * @return string[]
      */
-    protected function fullKey(string $initalKey): array
+    protected function fullKey(string $initialKey): array
     {
-        return array_values($this->initialPath + $this->arr->setString($this->checkKey($initalKey))->getArray());
+        return array_values($this->initialPath + $this->arr->setString($this->checkKey($initialKey))->getArray());
     }
 }

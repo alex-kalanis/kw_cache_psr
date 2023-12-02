@@ -3,6 +3,7 @@
 namespace kalanis\kw_cache_psr\Adapters;
 
 
+use DateInterval;
 use kalanis\kw_cache\CacheException;
 use kalanis\kw_cache\Interfaces\ICache;
 use kalanis\kw_cache\Interfaces\IFormat;
@@ -55,7 +56,7 @@ class MultiCacheAdapter implements CacheInterface
     /**
      * @param string $key
      * @param mixed $value
-     * @param \DateInterval|int|null $ttl
+     * @param DateInterval|int|null $ttl
      * @throws InvalidArgumentException
      * @return bool
      */
@@ -114,7 +115,7 @@ class MultiCacheAdapter implements CacheInterface
 
     /**
      * @param iterable<string, mixed> $values
-     * @param null|int|\DateInterval $ttl
+     * @param null|int|DateInterval $ttl
      * @throws InvalidArgumentException
      * @return bool
      */
