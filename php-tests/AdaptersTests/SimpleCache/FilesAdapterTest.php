@@ -4,7 +4,7 @@ namespace AdaptersTests;
 
 
 use kalanis\kw_cache\Format\Serialized;
-use kalanis\kw_cache_psr\Adapters\FilesAdapter;
+use kalanis\kw_cache_psr\Adapters\SimpleCache\FilesAdapter;
 use kalanis\kw_files\Access\Factory;
 use kalanis\kw_files\Interfaces\IProcessNodes;
 use kalanis\kw_storage\Storage;

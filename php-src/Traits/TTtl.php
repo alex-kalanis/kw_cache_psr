@@ -11,7 +11,7 @@ use kalanis\kw_cache_psr\CacheException;
 /**
  * Trait TTtl
  * @package kalanis\kw_cache_psr\Traits
- * Check key for problematic characters
+ * Check time to live
  */
 trait TTtl
 {

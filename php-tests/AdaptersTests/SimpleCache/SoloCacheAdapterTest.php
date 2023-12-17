@@ -6,7 +6,7 @@ namespace AdaptersTests;
 use kalanis\kw_cache\CacheException;
 use kalanis\kw_cache\Format\Serialized;
 use kalanis\kw_cache\Simple\Variable;
-use kalanis\kw_cache_psr\Adapters\SoloCacheAdapter;
+use kalanis\kw_cache_psr\Adapters\SimpleCache\SoloCacheAdapter;
 use Psr\SimpleCache\CacheInterface;
 use Psr\SimpleCache\InvalidArgumentException;
 

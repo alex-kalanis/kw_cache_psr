@@ -4,7 +4,7 @@ namespace AdaptersTests;
 
 
 use kalanis\kw_cache\Format\Serialized;
-use kalanis\kw_cache_psr\Adapters\StorageAdapter;
+use kalanis\kw_cache_psr\Adapters\SimpleCache\StorageAdapter;
 use kalanis\kw_storage\Storage;
 use kalanis\kw_storage\StorageException;
 use Psr\SimpleCache\CacheInterface;

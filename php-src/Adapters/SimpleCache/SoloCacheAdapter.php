@@ -1,51 +1,44 @@
 <?php
 
-namespace kalanis\kw_cache_psr\Adapters;
+namespace kalanis\kw_cache_psr\Adapters\SimpleCache;
 
 
 use DateInterval;
 use kalanis\kw_cache\CacheException;
 use kalanis\kw_cache\Interfaces\ICache;
 use kalanis\kw_cache\Interfaces\IFormat;
-use kalanis\kw_cache_psr\InvalidArgumentException;
-use kalanis\kw_cache_psr\Traits\TCheckKey;
 use Psr\SimpleCache\CacheInterface;
 
 
 /**
- * Class MultiCacheAdapter
- * @package kalanis\kw_cache_psr\Adapters
+ * Class SoloCacheAdapter
+ * @package kalanis\kw_cache_psr\Adapters\SimpleCache
  * Cache adapter for PSR Cache Interface
+ * You probably need another one, not this one
  */
-class MultiCacheAdapter implements CacheInterface
+class SoloCacheAdapter implements CacheInterface
 {
-    use TCheckKey;
-
     /** @var ICache */
-    protected $baseCache = null;
-    /** @var array<string, ICache> */
-    protected $caches = null;
+    protected $cache = null;
     /** @var IFormat */
     protected $format = null;
 
     public function __construct(ICache $cache, IFormat $format)
     {
-        $this->baseCache = $cache;
+        $this->cache = $cache;
         $this->format = $format;
     }
 
     /**
      * @param string $key
      * @param mixed $default
-     * @throws InvalidArgumentException
      * @return mixed|null
      */
     public function get($key, $default = null)
     {
         try {
-            $usedKey = $this->checkKey($key);
-            if (isset($this->caches[$usedKey])) {
-                return $this->format->unpack($this->caches[$usedKey]->get());
+            if ($this->cache->exists()) {
+                return $this->format->unpack($this->cache->get());
             }
             return $default;
         } catch (CacheException $ex) {
@@ -57,22 +50,12 @@ class MultiCacheAdapter implements CacheInterface
      * @param string $key
      * @param mixed $value
      * @param DateInterval|int|null $ttl
-     * @throws InvalidArgumentException
      * @return bool
      */
     public function set($key, $value, $ttl = null): bool
     {
         try {
-            $usedKey = $this->checkKey($key);
-            if (!isset($this->caches[$usedKey])) {
-                $cache = clone $this->baseCache;
-                $cache->init([$usedKey]);
-            } else {
-                $cache = $this->caches[$usedKey];
-            }
-            $cache->set(strval($this->format->pack($value)));
-            $this->caches[$usedKey] = $cache;
-            return true;
+            return $this->cache->set(strval($this->format->pack($value)));
         } catch (CacheException $ex) {
             return false;
         }
@@ -80,28 +63,26 @@ class MultiCacheAdapter implements CacheInterface
 
     /**
      * @param string $key
-     * @throws InvalidArgumentException
      * @return bool
      */
     public function delete($key): bool
     {
-        $usedKey = $this->checkKey($key);
-        if (isset($this->caches[$usedKey])) {
-            unset($this->caches[$usedKey]);
-        }
-        return true;
+        return $this->clear();
     }
 
     public function clear(): bool
     {
-        $this->caches = [];
-        return true;
+        try {
+            $this->cache->clear();
+            return true;
+        } catch (CacheException $ex) {
+            return false;
+        }
     }
 
     /**
      * @param iterable<string|int, string> $keys
      * @param mixed $default
-     * @throws InvalidArgumentException
      * @return iterable<string, mixed>
      */
     public function getMultiple($keys, $default = null): iterable
@@ -116,35 +97,32 @@ class MultiCacheAdapter implements CacheInterface
     /**
      * @param iterable<string, mixed> $values
      * @param null|int|DateInterval $ttl
-     * @throws InvalidArgumentException
      * @return bool
      */
     public function setMultiple($values, $ttl = null): bool
     {
-        $result = true;
-        foreach ($values as $key => $value) {
-            $result = $result && $this->set($key, $value, $ttl);
-        }
-        return $result;
+        return false;
     }
 
     /**
      * @param iterable<string|int, string> $keys
-     * @throws InvalidArgumentException
      * @return bool
      */
     public function deleteMultiple($keys): bool
     {
-        $result = true;
-        foreach ($keys as $key) {
-            $result = $result && $this->delete($key);
-        }
-        return $result;
+        return $this->clear();
     }
 
+    /**
+     * @param string $key
+     * @return bool
+     */
     public function has($key): bool
     {
-        $usedKey = $this->checkKey($key);
-        return isset($this->caches[$usedKey]);
+        try {
+            return $this->cache->exists();
+        } catch (CacheException $ex) {
+            return false;
+        }
     }
 }

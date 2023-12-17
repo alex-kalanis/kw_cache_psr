@@ -1,6 +1,6 @@
 <?php
 
-namespace kalanis\kw_cache_psr\Adapters;
+namespace kalanis\kw_cache_psr\Adapters\SimpleCache;
 
 
 use DateInterval;
@@ -16,7 +16,7 @@ use Psr\SimpleCache\CacheInterface;
 
 /**
  * Class StorageAdapter
- * @package kalanis\kw_cache_psr\Adapters
+ * @package kalanis\kw_cache_psr\Adapters\SimpleCache
  * Storage adapter for PSR Cache Interface
  */
 class StorageAdapter implements CacheInterface
