@@ -7,18 +7,19 @@
     "license": "BSD-3-Clause",
     "type": "library",
     "require": {
-        "alex-kalanis/kw_cache": ">=3.0 <4",
+        "alex-kalanis/kw_cache": ">=4.0 <5",
         "psr/simple-cache": ">=1.0 <2",
         "ext-json": "*",
         "php": ">=7.4"
     },
     "require-dev": {
-        "alex-kalanis/kw_files": ">=3.3 <4",
-        "alex-kalanis/kw_storage": ">=4.0 <5",
+        "alex-kalanis/kw_files": ">=4.0 <5",
+        "alex-kalanis/kw_storage": ">=5.0 <6",
+        "shipmonk/composer-dependency-analyser": "^1.4",
         "friendsofphp/php-cs-fixer": "^3.0",
         "phpstan/phpstan": "^1.0",
         "phpstan/phpstan-phpunit": "^1.0",
-        "phpunit/phpunit": ">=7.2 <=9"
+        "phpunit/phpunit": ">=8.0 <=9"
     },
     "suggest": {
         "alex-kalanis/kw_files": "Files access in KWCMS",

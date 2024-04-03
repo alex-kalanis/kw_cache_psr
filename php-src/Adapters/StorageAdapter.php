@@ -24,10 +24,8 @@ class StorageAdapter implements CacheInterface
     use TCheckKey;
     use TTtl;
 
-    /** @var IStorage */
-    protected $storage = null;
-    /** @var IFormat */
-    protected $format = null;
+    protected IStorage $storage;
+    protected IFormat $format;
 
     public function __construct(IStorage $storage, IFormat $format)
     {
