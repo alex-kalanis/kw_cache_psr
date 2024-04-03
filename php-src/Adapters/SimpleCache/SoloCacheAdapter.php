@@ -18,10 +18,8 @@ use Psr\SimpleCache\CacheInterface;
  */
 class SoloCacheAdapter implements CacheInterface
 {
-    /** @var ICache */
-    protected $cache = null;
-    /** @var IFormat */
-    protected $format = null;
+    protected ICache $cache;
+    protected IFormat $format;
 
     public function __construct(ICache $cache, IFormat $format)
     {

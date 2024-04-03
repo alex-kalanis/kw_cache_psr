@@ -25,14 +25,11 @@ class FilesAdapter implements CacheInterface
 {
     use TCheckKey;
 
-    /** @var CompositeAdapter */
-    protected $files = null;
-    /** @var IFormat */
-    protected $format = null;
-    /** @var ArrayPath */
-    protected $arr = null;
+    protected CompositeAdapter $files;
+    protected IFormat $format;
+    protected ArrayPath $arr;
     /** @var string[] */
-    protected $initialPath = null;
+    protected array $initialPath = [];
 
     /**
      * @param CompositeAdapter $files

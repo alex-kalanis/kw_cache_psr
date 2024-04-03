@@ -21,12 +21,10 @@ class MultiCacheAdapter implements CacheInterface
 {
     use TCheckKey;
 
-    /** @var ICache */
-    protected $baseCache = null;
+    protected ICache $baseCache;
+    protected IFormat $format;
     /** @var array<string, ICache> */
-    protected $caches = null;
-    /** @var IFormat */
-    protected $format = null;
+    protected array $caches = [];
 
     public function __construct(ICache $cache, IFormat $format)
     {
