@@ -15,6 +15,7 @@
     "require-dev": {
         "alex-kalanis/kw_files": ">=4.0 <5",
         "alex-kalanis/kw_storage": ">=5.0 <6",
+        "alex-kalanis/kw_paths": ">=4.0 <5",
         "shipmonk/composer-dependency-analyser": "^1.4",
         "friendsofphp/php-cs-fixer": "^3.0",
         "phpstan/phpstan": "^1.0",
