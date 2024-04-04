@@ -21,10 +21,7 @@ class ItemAdapter implements CacheItemInterface
 
     /** @var mixed|null */
     protected $cache = null;
-    /** @var string */
-    protected $key = '';
-    /** @var ClockInterface */
-    protected $clock = null;
+    protected string $key = '';
 
     public function __construct(string $key, ClockInterface $clock = null)
     {
@@ -55,6 +52,11 @@ class ItemAdapter implements CacheItemInterface
 
     protected function isExpired(): bool
     {
-        return $this->getClocks()->now() <= $this->getExpire();
+        $expireTime = $this->getExpire();
+        if (is_null($expireTime)) {
+            // null = never
+            return false;
+        }
+        return $this->getClocks()->now()->getTimestamp() >= $expireTime;
     }
 }

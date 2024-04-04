@@ -1,6 +1,6 @@
 <?php
 
-namespace AdaptersTests;
+namespace AdaptersTests\SimpleCache;
 
 
 use kalanis\kw_cache\CacheException;
@@ -11,7 +11,7 @@ use Psr\SimpleCache\InvalidArgumentException;
 
 /**
  * Class AAdaptersTest
- * @package AdaptersTests
+ * @package AdaptersTests\SimpleCache
  * Test things as defined in CacheInterface
  */
 abstract class AAdaptersTest extends \CommonTestClass

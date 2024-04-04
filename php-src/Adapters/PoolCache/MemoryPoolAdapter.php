@@ -19,21 +19,31 @@ class MemoryPoolAdapter implements CacheItemPoolInterface
     use TCheckKey;
 
     /** @var CacheItemInterface[] */
-    protected $items = [];
+    protected array $items = [];
+    /** @var array<string, CacheItemInterface> */
+    protected array $toSave = [];
 
     public function getItem($key)
     {
         $useKey = $this->checkKey($key);
-        $data = isset($this->items[$useKey]) ? $this->items[$useKey] : new ItemAdapter($useKey);
+        $data = $this->hasItem($key) ? $this->items[$useKey] : new ItemAdapter($useKey);
         return $data;
     }
 
+    /**
+     * @param array<string> $keys
+     * @throws InvalidArgumentException
+     * @throws \Psr\Cache\InvalidArgumentException
+     * @return array<string, CacheItemInterface>|\Traversable<string, CacheItemInterface>
+     */
     public function getItems(array $keys = array())
     {
         $result = [];
         foreach ($keys as $key) {
-            $useKey = $this->checkKey($key);
-            $result[$useKey] = $this->getItem($useKey);
+            if ($this->hasItem($key)) {
+                $useKey = $this->checkKey($key);
+                $result[$useKey] = $this->getItem($useKey);
+            }
         }
         return $result;
     }
@@ -47,6 +57,7 @@ class MemoryPoolAdapter implements CacheItemPoolInterface
     public function clear()
     {
         $this->items = [];
+        $this->toSave = [];
         return true;
     }
 
@@ -80,11 +91,20 @@ class MemoryPoolAdapter implements CacheItemPoolInterface
 
     public function saveDeferred(CacheItemInterface $item)
     {
-        return $this->save($item);
+        try {
+            $this->toSave[$this->checkKey($item->getKey())] = $item;
+            return true;
+        } catch (InvalidArgumentException $ex) {
+            return false;
+        }
     }
 
     public function commit()
     {
-        return true;
+        $result = true;
+        foreach ($this->toSave as $item) {
+            $result = $result && $this->save($item);
+        }
+        return $result;
     }
 }

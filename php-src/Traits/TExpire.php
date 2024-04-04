@@ -15,8 +15,7 @@ use Exception;
  */
 trait TExpire
 {
-    /** @var int|null */
-    protected $expire = null;
+    protected ?int $expire = null;
 
     /**
      * @param object|DateTimeInterface|int|null $expiration

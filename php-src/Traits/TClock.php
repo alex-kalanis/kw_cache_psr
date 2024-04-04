@@ -14,8 +14,7 @@ use Psr\Clock\ClockInterface;
  */
 trait TClock
 {
-    /** @var ClockInterface|null */
-    protected $clock = null;
+    protected ?ClockInterface $clock = null;
 
     public function initTClock(?ClockInterface $clock): void
     {

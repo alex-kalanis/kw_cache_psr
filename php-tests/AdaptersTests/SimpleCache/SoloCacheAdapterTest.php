@@ -1,6 +1,6 @@
 <?php
 
-namespace AdaptersTests;
+namespace AdaptersTests\SimpleCache;
 
 
 use kalanis\kw_cache\CacheException;
