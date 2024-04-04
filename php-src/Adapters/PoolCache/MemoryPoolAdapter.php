@@ -33,7 +33,7 @@ class MemoryPoolAdapter implements CacheItemPoolInterface
     /**
      * @param array<string> $keys
      * @throws InvalidArgumentException
-     * @throws \Psr\Cache\InvalidArgumentException
+     * @-throws \Psr\Cache\InvalidArgumentException
      * @return array<string, CacheItemInterface>|\Traversable<string, CacheItemInterface>
      */
     public function getItems(array $keys = array())
